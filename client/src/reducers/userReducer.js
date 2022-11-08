@@ -14,13 +14,6 @@ import {
     LOAD_ALL_USER_FAIL,
     LOAD_ALL_USER_SUCCESS,
 } from "../constant/userConstant";
-const initialState = {
-    isLoading: false,
-    isAuthenticated: false,
-    users: null,
-    user: null,
-    error: null,
-};
 export const userReducer = (
     state = {
         isLoading: false,
