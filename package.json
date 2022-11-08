@@ -1,7 +1,7 @@
 {
     "name": "stack-overflow-clone",
     "version": "1.0.0",
-    "description": "",
+    "description": "Stack overflow",
     "main": "index.js",
     "scripts": {
         "start": "node server/index.js",
