@@ -13,6 +13,7 @@
         "firebase": "^9.13.0",
         "formik": "^2.2.9",
         "jwt-decode": "^3.1.2",
+        "leaflet": "^1.9.2",
         "mapbox-gl": "^2.10.0",
         "moment": "^2.29.4",
         "otp-input-react": "^0.3.0",
@@ -20,12 +21,14 @@
         "react-copy-to-clipboard": "^5.1.0",
         "react-dom": "^18.2.0",
         "react-icons": "^4.6.0",
+        "react-leaflet": "^4.1.0",
         "react-redux": "^8.0.4",
         "react-router-dom": "^6.4.2",
         "react-scripts": "5.0.1",
         "redux": "^4.2.0",
         "redux-thunk": "^2.4.1",
         "web-vitals": "^2.1.4",
+        "worker-loader": "^3.0.8",
         "yup": "^0.32.11"
     },
     "scripts": {

@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router'
 import Loading from './Loading'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import Map from './Map';
+
+
+
 const Profile = () => {
   const [show,setShow]=useState(false);
   const {user}=useSelector((state)=>state.user)
@@ -44,8 +47,28 @@ const Profile = () => {
           show && <Map/>
         }
      
+        {/* {
+          show && <div className='w-4/5 h-4/5'>
+
+              <MapContainer center={ [78.032188, 30.316496]} zoom={3} scrollWheelZoom={false} style={{width:'100vw',height:'100vh'}}>
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={[51.505, -0.09]}>
+                  <Popup>
+                    A pretty CSS3 popup. <br /> Easily customizable.
+                  </Popup>
+                </Marker>
+              </MapContainer>
+
+
+          </div>
+        } */}
+     
     </div>
   )
 }
+
 
 export default Profile
