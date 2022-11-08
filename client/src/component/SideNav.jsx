@@ -54,12 +54,11 @@ const SideNav = ({setScreen}) => {
                         <span className={`mr-4  w-full py-1 block  border-4 border-transparent cursor-pointer ${activeScreen===list.heading &&"border-r-orange-500 border-4 bg-gray-100 border-gray-100 sm:font-bold"} ${list.specialClass}`} 
                             onClick={()=>handleClick(list.heading)}
                         >{list.heading}</span>
-
                             <ul className=' flex flex-col gap-2 text-gray-700 text-sm font-medium '>
                                 {
                                     list.subHeading.map((sub,i)=>{
                                         return (
-                                            <li  className={`ml-5 cursor-pointer border-4 border-transparent ${activeScreen===sub &&"border-r-orange-500 border-4 bg-gray-100 border-gray-100 font-bold md:text-base text-sm"} `} key={i} 
+                                            <li  className={`ml-5 cursor-pointer border-4 border-transparent ${activeScreen===sub &&"border-r-orange-500 border-4 bg-gray-100 border-gray-100 font-bold  text-sm"}`} key={i} 
                                             
                                             onClick={()=>handleClick(sub)}> {sub}</li>
 

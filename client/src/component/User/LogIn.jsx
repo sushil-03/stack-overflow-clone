@@ -12,10 +12,10 @@ import {auth} from "../../firebase"
 const LogIn = () => {
     const navigate=useNavigate();
     const dispatch=useDispatch();
-    const [phone,setPhone]=useState("+919548112836")
+    const [phone,setPhone]=useState("")
     const [pass,showPass]=useState(false);
-    const [email,setEmail]=useState("hsjoad@gmail.com");
-    const [password,setPassword]=useState("134343");
+    const [email,setEmail]=useState("");
+    const [password,setPassword]=useState("");
     const [otpInput,showOTPInput]=useState(false);
     const [otp, setOtp] = useState("");
     const {isLoading,isAuthenticated,error}=useSelector((state)=>state.user)
