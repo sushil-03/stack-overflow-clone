@@ -9,8 +9,8 @@ const path = require("path");
 connectDB();
 app.use(cors());
 
-// const PORT = process.env.PORT || 3000;
-const PORT = 5001;
+const PORT = process.env.PORT || 3000;
+// const PORT = 5001;
 
 const user = require("./routes/user");
 const question = require("./routes/question");
