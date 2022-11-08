@@ -7,9 +7,9 @@ import { clearError, createQuestion } from "../../actions/questionAction";
 
 const AskQuestion = () => {
     const navigate = useNavigate();
-    const [title, setTitle] = useState("Hey there are what are you");
-    const [body, setBody] = useState("sdfadkfds dsf sd fas dfds asd fs dfj");
-    const [tags, setTags] = useState("HTML VSS GIT VIM");
+    const [title, setTitle] = useState("");
+    const [body, setBody] = useState("");
+    const [tags, setTags] = useState("");
     const { user } = useSelector((state) => state.user);
     const { isAdded } = useSelector((state) => state.question);
     const dispatch = useDispatch();
@@ -29,6 +29,7 @@ const AskQuestion = () => {
             return;
         }
         const tagsArray = tags.split(" ");
+        console.log(tagsArray);
         dispatch(createQuestion(title, body, tagsArray));
     };
     return (

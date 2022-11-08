@@ -14,7 +14,7 @@ import {
     GET_ALL_QUESTION_FAIL,
     CLEAR_ERROR,
 } from "../constant/questionConstant";
-export const createQuestion = (heading, detail, tag) => async (dispatch) => {
+export const createQuestion = (heading, detail, tags) => async (dispatch) => {
     try {
         dispatch({ type: CREATE_QUESTION_REQUEST });
         let config = {
@@ -24,7 +24,7 @@ export const createQuestion = (heading, detail, tag) => async (dispatch) => {
         };
         const response = await axios.post(
             "/api/v1/question/create",
-            { heading, detail, tag },
+            { heading, detail, tags },
             config
         );
         dispatch({

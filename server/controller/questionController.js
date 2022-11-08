@@ -10,7 +10,12 @@ exports.getAllQuestion = async (req, res, next) => {
           }
         : {};
     const allQuestion = await Question.find({ ...keyword }).populate("askedBy");
-    const check = allQuestion[0].askedBy;
+    if (!allQuestion) {
+        return res.status(404).json({
+            success: false,
+            message: "No Question",
+        });
+    }
     res.status(200).json({
         success: true,
         message: allQuestion,
