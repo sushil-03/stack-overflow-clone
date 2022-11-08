@@ -30,11 +30,7 @@ const Map = () => {
             map.addControl(new mapboxgl.AttributionControl(), "bottom-left");
         }
     }, [latitude, longitude]);
-    return (
-        <div id="map" className="flex-1">
-            Map
-        </div>
-    );
+    return <div id="map" className="flex-1"></div>;
 };
 
 export default Map;
