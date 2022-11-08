@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 // import mapboxgl from "mapbox-gl/dist/mapbox-gl-csp";
-import MapboxWorker from "mapbox-gl/dist/mapbox-gl-csp-worker";
+
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from "!mapbox-gl";
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
 
 const Map = () => {
     const [latitude, setLang] = useState("");
@@ -16,8 +18,6 @@ const Map = () => {
         if (mapboxgl) {
             mapboxgl.accessToken =
                 "pk.eyJ1Ijoic3VzaGlsZSIsImEiOiJja3IyYjh2NW0waW1yMm5yeDEwamtveG52In0.CtiyE_hQWk3oCQdvhx46dw";
-
-            // mapboxgl.workerClass = MapboxWorker;
 
             const map = new mapboxgl.Map({
                 container: "map",
