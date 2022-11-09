@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Input from './Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userAction';
+import { ToastContainer, toast } from "react-toastify";
 
 const Navbar = () => {
   const {isAuthenticated,user}=useSelector((state)=>state.user)
@@ -12,7 +13,7 @@ const Navbar = () => {
   const logo=isAuthenticated ?user?.name?.[0] :'Z';
   const navigate=useNavigate();
   const handleLogOut=()=>{
-
+    toast.success("Logout successfully")
     dispatch(logout());
     navigate("/")
 
@@ -60,6 +61,18 @@ const Navbar = () => {
             <button className='text-dk-blue px-3 py-2  rounded-sm ring-[1px] ring-dk-blue bg-lt-blue/20 hover:bg-lt-blue/40' onClick={()=>handleLogOut()}>Log out</button>
               </div>
             }
+             <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
     </div>
   )
 }

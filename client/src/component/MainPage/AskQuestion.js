@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearError, createQuestion } from "../../actions/questionAction";
+import { ToastContainer, toast } from "react-toastify";
 
 const AskQuestion = () => {
     const navigate = useNavigate();
@@ -15,9 +16,11 @@ const AskQuestion = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (user == null) {
+            toast.error("Please login first");
             navigate("/auth/login");
         }
         if (isAdded) {
+            toast.success("Answer added successfully");
             dispatch(clearError());
             navigate("/");
             return;
@@ -108,6 +111,18 @@ const AskQuestion = () => {
                     </button>
                 </div>
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </>
     );
 };

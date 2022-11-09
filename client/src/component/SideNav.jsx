@@ -58,9 +58,9 @@ const SideNav = ({setScreen}) => {
                                 {
                                     list.subHeading.map((sub,i)=>{
                                         return (
-                                            <li  className={`ml-5 cursor-pointer border-4 border-transparent ${activeScreen===sub &&"border-r-orange-500 border-4 bg-gray-100 border-gray-100 font-bold  text-sm"}`} key={i} 
+                                            <li  className={`ml-5 cursor-pointer border-4 border-transparent px-2 rounded-sm ${activeScreen===sub &&"border-r-orange-500 bg-gray-100 border-gray-100 font-bold  text-sm"}`} key={i} 
                                             
-                                            onClick={()=>handleClick(sub)}> {sub}</li>
+                                            onClick={()=>handleClick(sub)}> <p className=''>{sub}</p> </li>
 
                                         );
                                     })

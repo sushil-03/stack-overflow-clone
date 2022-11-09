@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userReducer";
 import { questionReducer } from "./reducers/questionReducer";
+import "react-toastify/dist/ReactToastify.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const rootReducer = combineReducers({

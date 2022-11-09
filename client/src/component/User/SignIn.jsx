@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import * as Yup from "yup"
-
+import { ToastContainer, toast } from "react-toastify";
 import {  signin } from '../../actions/userAction';
 import Loading from '../Loading';
 const SignIn = () => {
@@ -21,10 +21,11 @@ const SignIn = () => {
     }
     useEffect(()=>{
         if(isAuthenticated){
+            toast.success("Sign in successfully")
             navigate("/");
         }
         if(error){
-            alert(error);
+            toast.error(error);
         }
     },[error, isAuthenticated, navigate])
         const validationSchema =Yup.object({
@@ -108,7 +109,18 @@ const SignIn = () => {
             </Link>
             </p>
             </div>
-
+            <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
     </div>
   )
 }

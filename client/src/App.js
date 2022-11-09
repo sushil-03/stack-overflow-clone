@@ -5,6 +5,7 @@ import { loadUser } from "./actions/userAction";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAllQuestion } from "./actions/questionAction";
+
 function App() {
     const dispatch = useDispatch();
 

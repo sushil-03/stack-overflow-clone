@@ -3,8 +3,7 @@ import {  useNavigate, useParams } from 'react-router-dom';
 import { TiArrowSortedUp,TiArrowSortedDown } from 'react-icons/ti';
 import { BsClockHistory} from 'react-icons/bs';
 import {FiBookmark} from 'react-icons/fi';
-
-
+import { ToastContainer, toast } from "react-toastify";
 
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,12 +20,9 @@ const Question = () => {
 
     const {user}=useSelector((state)=>state.user);
     const {questions,isLoading,error}=useSelector((state)=>state.question)
-    // useEffect(()=>{
-    //     dispatch(voteQuestion(id,"No Response"))
-    // },[dispatch, id])
     useEffect(()=>{
         if(error){
-            alert(error);
+            toast.error(error);
             dispatch(clearError())
         }
         if(user && user.activity.length>0){
@@ -50,17 +46,20 @@ const Question = () => {
     
     const submitHandler=()=>{
         if(answer===""){
-            alert("Answer can't be empty");
+            toast.error("Answer can't be empty");
             return ;
         }
         if(!user){
+            toast.error("Please login first")
             navigate("/auth/login")
         }
         dispatch(addAnswer(id,answer))
+        toast.success("Answer added successfully")
         setAnswer("")
     }
     const voteHandler=(message)=>{
         if(!user){
+            toast.error("Please login first")
             navigate("/auth/login")
             return;
         }
@@ -74,24 +73,26 @@ const Question = () => {
                 setStatus("No Respone")
             }
             setInterval(()=>{
-
-            window.location.reload(false)
+                window.location.reload(false)
             },1000)
+            toast.success("Question has been voted successfully")
         }
     }
     if(!myQues){
         return <Loading/>
     }
+
   return ( 
     <div className='mt-14 ml-4  md:w-4/5 lg:mr-24 flex-1 mx-4'>
         <div className='flex'>
         <div className='md:w-4/5 w-full'>
-        <div className='flex justify-between w-full  flex-wrap gap-2'>
-            <p className='md:text-3xl text-xl font-medium text-black flex-1 min-w-fit' >
+        <div className='flex justify-between w-full   gap-2 '>
+            <p className='md:text-3xl text-xl font-medium text-black w-4/5 flex ' >
                 {myQues.heading}
             </p>
-            <Link to="/v1/ask">
-            <button className='bg-lt-blue px-3 rounded-md py-2 text-white hover:bg-sky-600 text-sm font-semibold'>Ask Questions</button>
+            
+            <Link to="/v1/ask" className='w-20 '>
+            <button className='bg-lt-blue px-3 rounded-md py-2 text-white hover:bg-sky-600 md:text-sm text-xs font-semibold'>Ask Questions</button>
         </Link>
         </div>
         <div className='border-b'>
@@ -99,31 +100,31 @@ const Question = () => {
                 Asked by  <span className='text-black'> {myQues.askedBy.name}</span>
             </p>
         </div>
-        <div className='flex relative mt-5' >
+        <div className='flex relative md:mt-5 mt-2 gap-2' >
             <div className='flex flex-col items-center w-[10%]  '>
-                <TiArrowSortedUp  className={`${status==="UpVote"?'text-orange-600':'text-gray-400'} cursor-pointer text-4xl `}  onClick={()=>voteHandler("UpVote")}/>
-                <span className='text-2xl'>{myQues.votes}</span>
-                <TiArrowSortedDown className={`${status==="DownVote"?'text-red-600':'text-gray-400'} cursor-pointer text-4xl`}   onClick={()=>voteHandler("DownVote")}/>
+                <TiArrowSortedUp  className={`${status==="UpVote"?'text-orange-600':'text-gray-400'} cursor-pointer md:text-4xl  text-2xl`}  onClick={()=>voteHandler("UpVote")}/>
+                <span className='md:text-2xl text-lg'>{myQues.votes}</span>
+                <TiArrowSortedDown className={`${status==="DownVote"?'text-red-600':'text-gray-400'} cursor-pointer  md:text-4xl text-2xl`}   onClick={()=>voteHandler("DownVote")}/>
                 <FiBookmark className='text-gray-500  'size={"1.4rem"} />
                 <BsClockHistory className='text-gray-500 mt-4'size={"1.4rem"} />
             </div>
-            <div className='flex-1 mt-8  relative'>
+            <div className='flex-1 mt-8  relative md:text-base text-sm'>
                 <div>
                 {
                     myQues.detail
 
                 }
                 </div>
-                <div className='flex flex-row mt-5 flex-wrap gap-4'>
+                <div className='flex flex-row md:mt-5 mt-2 flex-wrap md:gap-4 gap-2 font-semibold'>
                 {
                 myQues?.tags.map((myTag,key)=>{
                   return (
-                    <span className='text-sm px-3 py-1 rounded-sm bg-sky-100 cursor-pointer'key={key}>{myTag}</span>
+                    <span className='md:text-sm text-xs px-3 py-1 rounded-sm bg-sky-100 cursor-pointer'key={key}>{myTag}</span>
                   );
                 })
               }
                 </div>
-                <div className='w-full absolute right-10 bottom-2'>
+                <div className='w-full absolute md:right-10 right-0 md:bottom-2 bottom-0'>
                     <p className='text-sky-800 text-sm text-right w-full font-medium'>
                       <span className='px-3 py-2 bg-orange-600 text-white  rounded-md mx-1'>
                         {myQues.askedBy.name[0]}
@@ -194,6 +195,18 @@ const Question = () => {
 </div>
             
         </div>
+        <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
     </div>
   )
 }

@@ -8,7 +8,7 @@ import Loading from '../Loading';
 
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import {auth} from "../../firebase"
-
+import { ToastContainer, toast } from "react-toastify";
 const LogIn = () => {
     const navigate=useNavigate();
     const dispatch=useDispatch();
@@ -19,12 +19,16 @@ const LogIn = () => {
     const [otpInput,showOTPInput]=useState(false);
     const [otp, setOtp] = useState("");
     const {isLoading,isAuthenticated,error}=useSelector((state)=>state.user)
+    
     useEffect(()=>{
         if(isAuthenticated){
+            console.log('jappepepepe');
+            toast.success("User login successfully")
+            console.log('qne');
             navigate("/");
         }
         if(error){
-            alert(error);
+            toast.error(error)
             dispatch(clearError());
         }
     },[dispatch, error, isAuthenticated, navigate])
@@ -33,19 +37,19 @@ const handleSubmit=(e)=>{
     e.preventDefault();
 
     if(!email){
-        alert("Email cannot be empty")
+        toast.error("Email cannot be empty");
         dispatch(clearError())
         return ;
     }
-    if(otpInput){
+    if(otpInput && otp!==""){
         if(!window.confirmationResult){
-            alert("Please try again after some time..");
+            toast.error("Please try again after some time..");
             return;
         }
         window.confirmationResult.confirm(otp).then((res)=>{
             dispatch(login(email,"",true))
         }).catch(er=>{
-            alert("OTP DOESN'T MATCH");
+            toast.error("OTP DOESN'T MATCH")
         })
     }else{
         dispatch(login(email,password))
@@ -69,7 +73,7 @@ const handleOTP=async()=>{
         .then((confirmationResult) => { 
             window.confirmationResult = confirmationResult;
         }).catch((error) => {
-            alert("Too Many Request . Please try after some time.")
+            toast.alert("Too Many Request . Please try after some time.")
         });
 }
 
@@ -111,7 +115,7 @@ const handleOTP=async()=>{
                     <div className='  pb-2 px-6 relative'>
                         <label htmlFor="phone" className='font-bold '>Phone </label>
                         <div className={`border-2 border-gray-300  rounded-md  relative`}>
-                            <Input type="text" id="phone" classes="pr-10" name="phone" placeholder="phone" value={phone} onChange={(e)=>setPhone(e.target.value)}/>
+                            <Input type="text" id="phone" classes="pr-10" name="phone" placeholder="+91 .... .... " value={phone} onChange={(e)=>setPhone(e.target.value)}/>
                             <div className='absolute right-0 text-lg bg-sky-400 px-1 top-0 bottom-0  rounded-sm border-sky-500 border-2 text-white cursor-pointer' onClick={()=>handleOTP()}>
                             SEND
                             </div>
@@ -137,6 +141,18 @@ const handleOTP=async()=>{
                 </Link> </p>
                  </div>
 
+                 <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
             </div>
 
   )
