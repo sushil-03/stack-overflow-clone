@@ -24,7 +24,6 @@ const LogIn = () => {
         if(isAuthenticated){
             console.log('jappepepepe');
             toast.success("User login successfully")
-            console.log('qne');
             navigate("/");
         }
         if(error){
@@ -73,7 +72,7 @@ const handleOTP=async()=>{
         .then((confirmationResult) => { 
             window.confirmationResult = confirmationResult;
         }).catch((error) => {
-            toast.alert("Too Many Request . Please try after some time.")
+            toast.error("Too Many Request . Please try after some time.")
         });
 }
 
