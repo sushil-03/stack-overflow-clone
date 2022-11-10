@@ -5,21 +5,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { clearError, login } from '../../actions/userAction';
 import Loading from '../Loading';
+import codes from 'country-calling-code';
 
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import {auth} from "../../firebase"
 import { ToastContainer, toast } from "react-toastify";
 const LogIn = () => {
     const navigate=useNavigate();
+    
     const dispatch=useDispatch();
     const [phone,setPhone]=useState("")
     const [pass,showPass]=useState(false);
+    const [code,showCode]=useState(false);
+    const [myCode,setMyCode]=useState("91")
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
     const [otpInput,showOTPInput]=useState(false);
     const [otp, setOtp] = useState("");
     const {isLoading,isAuthenticated,error}=useSelector((state)=>state.user)
-    
+    const [allCodes,setCodes]=useState(codes)
     useEffect(()=>{
         if(isAuthenticated){
             console.log('jappepepepe');
@@ -59,7 +63,9 @@ if(isLoading){
     return <Loading/>
 }
 const handleOTP=async()=>{
-    const phoneNumber = phone
+    const phoneNumber ='+'+myCode+phone
+    
+    console.log(phoneNumber);
     const recaptchaVerifier = new RecaptchaVerifier(
         "recaptcha-container",
         {},
@@ -67,13 +73,24 @@ const handleOTP=async()=>{
       );
       recaptchaVerifier.render();
 
-
+    console.log('rec',recaptchaVerifier);
     return signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
         .then((confirmationResult) => { 
             window.confirmationResult = confirmationResult;
         }).catch((error) => {
+            console.log('My',error);
             toast.error("Too Many Request . Please try after some time.")
         });
+}
+
+function handleCountry(str){
+    console.log(str);
+    if(str===""){
+        setCodes(codes)
+    }else{
+    const newCodes= codes.filter((code)=>code.country.toUpperCase().match(str.toUpperCase()));
+    setCodes(newCodes)
+    }
 }
 
   return (
@@ -94,7 +111,7 @@ const handleOTP=async()=>{
                         <div className={`border-2 border-gray-300  rounded-md mt-2 relative`}>
                             <Input type={`${pass===false ?"password":"text"}`} id="password" classes="pr-10" name="password" placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
                             <div className='absolute right-2 text-xl mt-2 bottom-2' onClick={()=>showPass(!pass)}>
-
+                          
                             {
                                 pass ?  <AiOutlineEyeInvisible />:<AiOutlineEye  />
                             }
@@ -113,12 +130,41 @@ const handleOTP=async()=>{
                     <div className={`${otpInput===true?"block":"hidden"}`}>
                     <div className='  pb-2 px-6 relative'>
                         <label htmlFor="phone" className='font-bold '>Phone </label>
-                        <div className={`border-2 border-gray-300  rounded-md  relative`}>
-                            <Input type="text" id="phone" classes="pr-10" name="phone" placeholder="+91 .... .... " value={phone} onChange={(e)=>setPhone(e.target.value)}/>
-                            <div className='absolute right-0 text-lg bg-sky-400 px-1 top-0 bottom-0  rounded-sm border-sky-500 border-2 text-white cursor-pointer' onClick={()=>handleOTP()}>
-                            SEND
+
+                        
+                        <div className={` border-gray-300  rounded-md  relative  flex`}>
+                            <div className={` absolute z-40 top-0  left-0 flex w-full flex-col min-w-fit ${code &&"h-44"} overflow-scroll`}>
+                            {
+                                
+                                code ===false ?
+                                <p onClick={()=>{
+                                    showCode(!code)
+                                
+                                }} className="px-2 w-min z-10 border-r-2  border-gray-200 cursor-pointer text-sky-600 font-semibold py-2  gap-2">{myCode}</p>    :
+                                <div className='w-full'>
+                                    <Input placeholder='search by country' classes="z-20 border-b border-2"  onChange={(e)=>handleCountry(e.target.value)}/>
+                                    {allCodes.sort().map((code,key)=>{
+                                        return <span key={key} className='px-2  cursor-pointer bg-gray-200 flex justify-between items-center  border-b border-gray-300 py-1' onClick={()=>{
+                                            setMyCode(code.countryCodes[0])
+                                            showCode(!code);
+                                        }}>
+                                          <span>{code.isoCode2}  </span>
+                                          <span className='text-sm'> {code.country} </span>
+                                             
+                                             </span> 
+                                    })
+                                }
+                                </div>
+                            }
                             </div>
+                        <div className={`border-2 border-gray-300  rounded-md  relative  flex ${code && "hidden"}`}>
+                            <Input type="text" id="phone" classes="pr-24 z-40 ml-9" name="phone" placeholder="phone" value={phone}  onChange={(e)=>setPhone(e.target.value)}/>
+                    </div>
+    <div className={`absolute right-0 z-50 top-0 bottom-0 text-lg bg-sky-400 px-1  text-center mx-auto  rounded-md border-sky-500 border-2 text-white cursor-pointer ${code && "hidden"}`} onClick={()=>handleOTP()}>
+                                SEND
+                            </div> 
                         </div>
+                        
                     </div>
                     <div className='  pb-6 px-6 relative'>
                         <label htmlFor="otp" className='font-bold '>OTP </label>

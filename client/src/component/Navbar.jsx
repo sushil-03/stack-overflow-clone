@@ -19,7 +19,7 @@ const Navbar = () => {
 
   }
   return (
-    <div className='flex items-center justify-around sm:gap-2 md:gap-5 gap-1 sm:px-8 px-2 text-sm text-lt-gray sm:font-medium fixed w-full z-40 bg-white top-0 border-b shadow-md'>
+    <div className='flex w-full items-center md:justify-around justify-between sm:gap-2 md:gap-5 gap-1 sm:px-8 px-2 text-sm text-lt-gray sm:font-medium fixed  z-40 bg-white top-0 border-b shadow-md'>
             <Link to="/">
             <img src="/assets/logo.png" alt="logo" className=' h-14 cursor-pointer' />
             </Link>
