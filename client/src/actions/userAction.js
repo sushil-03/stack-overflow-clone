@@ -17,7 +17,7 @@ import {
 } from "../constant/userConstant";
 
 export const login =
-    (email, password, isOtpVerified = false) =>
+    (email, password, isOtpVerified = false, phone = "") =>
     async (dispatch) => {
         try {
             dispatch({ type: LOGIN_REQUEST });
@@ -28,7 +28,7 @@ export const login =
             };
             const response = await axios.post(
                 "/api/v1/login",
-                { email, password, isOtpVerified },
+                { email, password, isOtpVerified, phone },
                 config
             );
 

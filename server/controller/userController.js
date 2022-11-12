@@ -26,14 +26,17 @@ exports.getSingIn = async (req, res, next) => {
 };
 
 exports.getLogIn = async (req, res, next) => {
-    const { email, password, isOtpVerified = false } = req.body;
+    const { email, password, phone, isOtpVerified = false } = req.body;
+    if (isOtpVerified) {
+        const existingUser = await User.findOne({ phone });
+        return sendToken(existingUser, 200, res);
+    }
+
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
         res.status(404).json({
             message: "No user  found",
         });
-    } else if (isOtpVerified) {
-        return sendToken(existingUser, 200, res);
     } else {
         const isPasswordMatch = await bcrypt.compare(
             password,

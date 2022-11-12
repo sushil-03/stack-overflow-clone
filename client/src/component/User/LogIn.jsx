@@ -39,22 +39,24 @@ const LogIn = () => {
 const handleSubmit=(e)=>{
     e.preventDefault();
 
-    if(!email){
-        toast.error("Email cannot be empty");
-        dispatch(clearError())
-        return ;
-    }
     if(otpInput && otp!==""){
         if(!window.confirmationResult){
             toast.error("Please try again after some time..");
             return;
         }
         window.confirmationResult.confirm(otp).then((res)=>{
-            dispatch(login(email,"",true))
+            const number ='+'+myCode+phone
+
+            dispatch(login(email,"",true,number))
         }).catch(er=>{
             toast.error("OTP DOESN'T MATCH")
         })
     }else{
+        if(!email || !password){
+            toast.error("Field cann't be empty");
+            dispatch(clearError())
+            return ; 
+        }
         dispatch(login(email,password))
     }
 }
@@ -96,15 +98,14 @@ function handleCountry(str){
   return (
     <div className='mt-14 bg-gray-200/40 h-screen  grid place-items-center font-sans overflow-hidden relative transition-all ease-in-out'>
             <div className='xl:w-1/4 lg:w-1/3 md:w-1/3 mx-auto border-2 overflow-hidden rounded-md shadow-xl t-14 bg-white text relative'>
-                    <form action="" >
+                    <form action="" className={`${otpInput?"hidden":"block"}`} >
                     <div className=' py-3 px-6 relative'>
                         <label htmlFor="email" className='font-bold'>Email </label>
                         <div className={`border-2 border-gray-300 rounded-md mt-1`}>
                             <Input type="email" id="email" name="email"  placeholder="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                         </div>
                     </div>
-                    </form>
-                    <div>
+                    
 
                     <div className=' pt-2 pb-6 px-6 relative'>
                         <label htmlFor="password" className='font-bold '>Password </label>
@@ -119,13 +120,19 @@ function handleCountry(str){
                             </div>
                         </div>
                     </div>
-                    <div className=' w-5/6 flex mx-auto my-2 relative items-center gap-2'>
+                    </form>
+                    <div className={`${otpInput?"hidden":"block"} w-5/6 flex mx-auto my-2 relative items-center gap-2`}>
                         <div className='h-[2px] bg-gray-200 w-full'></div>
-                        <span className=''>or</span>
+                        <span className='uppercase'>or</span>
                         <div className='h-[2px] bg-gray-200 w-full'></div>
                     </div>
                     <div className='mx-6 py-6  relative t'>
-                        <p className='text-center cursor-pointer text-sm bg-gray-200 w-full p-2' onClick={()=>showOTPInput(!otpInput)}>Get an OTP on your phone</p>
+                        <p className='text-center cursor-pointer text-sm bg-gray-200 w-full p-2' onClick={()=>showOTPInput(!otpInput)}>
+                            
+                            {`${!otpInput?"Get an OTP on your phone":"Login through email"}`}
+
+                            
+                            </p>
                     </div>
                     <div className={`${otpInput===true?"block":"hidden"}`}>
                     <div className='  pb-2 px-6 relative'>
@@ -169,14 +176,13 @@ function handleCountry(str){
                     <div className='  pb-6 px-6 relative'>
                         <label htmlFor="otp" className='font-bold '>OTP </label>
                         <div className={`border-2 border-gray-300  rounded-md  relative`}>
-                            <Input type="number" id="otp" classes="w-full pr-10" name="otp" placeholder="OTP" value={otp} onChange={(e)=>setOtp(e.target.value)}/>
+                            <Input type="number" id="otp" classes="w-full pr-10 "  name="otp" placeholder="OTP" value={otp} onChange={(e)=>setOtp(e.target.value)}/>
                         </div>
                     </div>
                     <div  id="recaptcha-container" className="justify-center flex mx-4 ml-6 w-4/5">
                         
                     </div>
 
-                    </div>
                     </div>
                     
                     <button type="submit" className='bg-lt-blue  rounded-sm p-2 text-white hover:bg-sky-600 w-5/6 block mx-auto my-4 font-semibold' onClick={(e)=>handleSubmit(e)}>Log in</button>
