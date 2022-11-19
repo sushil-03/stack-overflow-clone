@@ -74,14 +74,15 @@ const Question = () => {
             }
             setInterval(()=>{
                 window.location.reload(false)
-            },1000)
+            },5)
             toast.success("Question has been voted successfully")
         }
     }
     if(!myQues){
         return <Loading/>
     }
-
+    const tep=Date.parse(myQues.createdAt)
+    const time=new Date(tep).toString().split(" ");
   return ( 
     <div className='mt-14 ml-4  md:w-4/5 lg:mr-24 flex-1 mx-4'>
         <div className='flex'>
@@ -97,7 +98,7 @@ const Question = () => {
         </div>
         <div className='border-b'>
             <p className='text-gray-500 text-sm my-2'>
-                Asked by  <span className='text-black'> {myQues.askedBy.name}</span>
+                Asked  on<span className='text-black'> {`${time[2]}, ${time[1]} ${time[3]}`}</span>
             </p>
         </div>
         <div className='flex relative md:mt-5 mt-2 gap-2' >

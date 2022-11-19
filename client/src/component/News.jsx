@@ -52,7 +52,7 @@ const News = () => {
   return (
     <div className='w-1/4 mt-8 mr-8 ml-5  flex-col gap-2 md:flex hidden ' >
 
-      <div className='border-[#f1e4bb] border-2 rounded-md'>
+      <div className='border-[#f1e4bb]  rounded-md border-x-2 border-b-2'>
       {
         newList.map((news,key)=>{
           return (
