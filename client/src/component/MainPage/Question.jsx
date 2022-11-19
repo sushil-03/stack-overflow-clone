@@ -74,7 +74,7 @@ const Question = () => {
             }
             setInterval(()=>{
                 window.location.reload(false)
-            },5)
+            },300)
             toast.success("Question has been voted successfully")
         }
     }
